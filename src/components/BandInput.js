@@ -41,10 +41,4 @@ const mapDispatchToProps = dispatch => ({
   addTodo: formData => dispatch({ type: 'ADD_BAND', payload: formData })
 })
 
-const mapStateToProps = state => {
-  return {
-    bands: state.bands
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BandInput)
+export default connect(null, mapDispatchToProps)(BandInput)
