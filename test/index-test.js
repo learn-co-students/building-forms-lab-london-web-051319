@@ -14,19 +14,22 @@ import Adapter from 'enzyme-adapter-react-16'
 configure({ adapter: new Adapter() })
 
 describe('BandInput component', () => {
+  const store = createStore(manageBand)
+  
   it('has an text input field', () => {
-    const wrapper = shallow(<BandInput />)
+    const wrapper = shallow(<BandInput store={store} />).dive();
+    console.log(wrapper.find('input'))
     expect(wrapper.find('input').first().type()).to.equal('input');
   });
 
   it('has an initial state with name key set to empty string', () => {
-    const wrapper = shallow(<BandInput />)
+    const wrapper = shallow(<BandInput store={store}/>).dive();
     expect(wrapper.state(), "BandInput state was not found").to.exist
     expect(wrapper.state('name')).to.equal('')
   });
 
   it('changes the local state on input change', () => {
-    const wrapper = shallow(<BandInput />)
+    const wrapper = shallow(<BandInput store={store}/>).dive();
     expect(wrapper.state('name'), "BandInput should mount with this.state.text equal to ''").to.equal('')
     let input = wrapper.find('input').first()
     input.simulate('change', { target: { name: 'name', value: 'Hello' } })
@@ -34,7 +37,7 @@ describe('BandInput component', () => {
   })
 
   it('calls dispatch when form is submitted', () => {
-    const store = createStore(manageBand)
+    // const store = createStore(manageBand)
 
     let spy = sinon.spy(store, "dispatch")
 
